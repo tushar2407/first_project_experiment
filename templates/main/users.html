@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Users</h1>
+    {% for user in accounts %}
+        <div style="margin:10px; border-width: 5px;">
+            <p>
+                username - {{user.username}}
+            </p>
+            <p>
+                email - {{user.email}}
+            </p>
+            <p>
+                lastlogin- {{user.last_login}}
+            </p>
+        </div>
+    {% endfor %}
+</body>
+</html>
