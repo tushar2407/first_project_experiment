@@ -7,6 +7,9 @@ from django.core.files.storage import FileSystemStorage
 from .forms import Bookform
 from .models import Book
 # Create your views here.
+
+from django.views.generic import TemplateView, ListView, CreateView
+from django.urls import reverse_lazy
 def index(request):
     context={}
     accounts=Account.objects.all()
@@ -44,3 +47,13 @@ def bio(request):
    return render(request, 'main/bio.html')
 def achievements(request):
    return render(request, 'main/achievements.html')
+class BookListView(ListView):
+    model=Book
+    template_name='main/class_book_list.html'
+    context_object_name="books"
+class UploadBookView(CreateView):
+    model=Book
+    #fields=['title','author','pdf','cover']
+    form_class=Bookform
+    success_url=reverse_lazy("book_list")
+    template_name="main/book_upload.html"
