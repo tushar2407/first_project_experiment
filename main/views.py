@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from account.models import Account
 
 from django.core.files.storage import FileSystemStorage
 
+from .forms import Bookform
+from .models import Book
 # Create your views here.
 def index(request):
     context={}
@@ -25,6 +27,19 @@ def upload(request):
         print(url)
         context['url']=url
     return render(request, 'main/upload.html',context)
+
+def book_list(request):
+    books=Book.objects.all()
+    return render(request,'main/book_list.html',  {'books':books})
+def book_upload(request):
+    if(request.method=="POST"):
+        form=Bookform(request.POST, request.FILES)
+        if form.is_valid:
+            form.save()
+            return redirect('book_list')
+    else :
+        form=Bookform()
+    return render(request,'main/book_upload.html',{'form':form})
 def bio(request):
    return render(request, 'main/bio.html')
 def achievements(request):
