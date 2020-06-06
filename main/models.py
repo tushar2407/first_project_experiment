@@ -17,3 +17,7 @@ class Book(models.Model):
     cover=models.ImageField(upload_to="books/covers/", null=True, blank=True)
     def __str__(self):
         return self.name
+    def delete(self,  *args, **kwargs):
+        self.pdf.delete()
+        self.cover.delete()
+        super().delete(*args, **kwargs )
